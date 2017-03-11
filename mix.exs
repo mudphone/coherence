@@ -40,7 +40,7 @@ defmodule Coherence.Mixfile do
       {:phoenix_html, "~> 2.6"},
       {:gettext, "~> 0.11"},
       {:uuid, "~> 1.0"},
-      {:phoenix_swoosh, git: "https://github.com/vircung/phoenix_swoosh.git", branch: "phx-1.3"},
+      {:phoenix_swoosh,git: "https://github.com/mudphone/phoenix_swoosh.git", branch: "1.3-rc0"},
       {:timex, "~> 3.0"},
       {:timex_ecto, "~> 3.0"},
       {:floki, "~> 0.8", only: :test},

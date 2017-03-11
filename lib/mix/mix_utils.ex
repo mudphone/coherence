@@ -47,4 +47,15 @@ defmodule Coherence.Mix.Utils do
     end
   end
 
+  @spec web_prefix() :: String.t
+  def web_prefix do
+    Mix.Phoenix.web_prefix()
+  end
+
+  @spec app_prefix() :: String.t
+  def app_prefix do
+    app = to_string(Mix.Phoenix.otp_app())
+    Path.join("lib", app)
+  end
+  
 end

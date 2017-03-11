@@ -23,7 +23,7 @@
   "phoenix": {:hex, :phoenix, "1.3.0-rc.0", "4ecd69b1a421157b1de3109c9531396e847df483c86fe2be8ad188c3b9b1f447", [:mix], [{:cowboy, "~> 1.0", [hex: :cowboy, optional: true]}, {:phoenix_pubsub, "~> 1.0", [hex: :phoenix_pubsub, optional: false]}, {:plug, "~> 1.3.2 or ~> 1.4", [hex: :plug, optional: false]}, {:poison, "~> 2.2 or ~> 3.0", [hex: :poison, optional: false]}]},
   "phoenix_html": {:hex, :phoenix_html, "2.9.3", "1b5a2122cbf743aa242f54dced8a4f1cc778b8bd304f4b4c0043a6250c58e258", [:mix], [{:plug, "~> 1.0", [hex: :plug, optional: false]}]},
   "phoenix_pubsub": {:hex, :phoenix_pubsub, "1.0.1", "c10ddf6237007c804bf2b8f3c4d5b99009b42eca3a0dfac04ea2d8001186056a", [:mix], []},
-  "phoenix_swoosh": {:hex, :phoenix_swoosh, "0.1.3", "f1ad7e7167355bd287d1490858bc73b66ed5961777cd112943f0b2ffacae4a23", [:mix], [{:phoenix, "~> 1.0", [hex: :phoenix, optional: false]}, {:phoenix_html, "~> 2.2", [hex: :phoenix_html, optional: false]}, {:swoosh, "~> 0.1", [hex: :swoosh, optional: false]}]},
+  "phoenix_swoosh": {:git, "https://github.com/mudphone/phoenix_swoosh.git", "0a6c63b1adc6c73e9ade392e2d1bdba6b3ed284f", [branch: "1.3-rc0"]},
   "plug": {:hex, :plug, "1.3.3", "d9be189924379b4e9d470caef87380d09549aea1ceafe6a0d41292c8c317c923", [:mix], [{:cowboy, "~> 1.0.1 or ~> 1.1", [hex: :cowboy, optional: true]}, {:mime, "~> 1.0", [hex: :mime, optional: false]}]},
   "poison": {:hex, :poison, "2.2.0", "4763b69a8a77bd77d26f477d196428b741261a761257ff1cf92753a0d4d24a63", [:mix], []},
   "poolboy": {:hex, :poolboy, "1.5.1", "6b46163901cfd0a1b43d692657ed9d7e599853b3b21b95ae5ae0a777cf9b6ca8", [:rebar], []},

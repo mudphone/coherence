@@ -265,7 +265,7 @@ defmodule Coherence.ControllerHelpers do
   @spec changeset(atom, module, schema, params) :: changeset
   def changeset(which, module, model, params \\ %{}) do
     {mod, fun, args} = case Application.get_env :coherence, :changeset do
-      nil -> {module, :changeset, [model, params]}
+      nil -> {module, :user_changeset, [model, params]}
       {mod, fun} -> {mod, fun, [model, params, which]}
     end
     apply mod, fun, args

@@ -63,7 +63,8 @@ defmodule Coherence.TrackableService do
   def track_login(conn, user, true, false) do
     {last_at, last_ip, ip, _now} = last_at_and_ip(conn, user)
 
-    Helpers.changeset(:session, user.__struct__, user,
+    changeset_module = user_changeset_module(user)
+    Helpers.changeset(:session, changeset_module, user,
       %{
         sign_in_count: user.sign_in_count + 1,
         current_sign_in_at: Ecto.DateTime.utc,
@@ -113,7 +114,8 @@ defmodule Coherence.TrackableService do
   @spec track_logout(conn, schema, boolean, boolean) :: conn
   def track_logout(conn, _, false, false), do: conn
   def track_logout(conn, user, true, false) do
-    Helpers.changeset(:session, user.__struct__, user,
+    changeset_module = user_changeset_module(user)
+    Helpers.changeset(:session, changeset_module, user,
       %{
         last_sign_in_at: user.current_sign_in_at,
         last_sign_in_ip: user.current_sign_in_ip,
@@ -148,6 +150,13 @@ defmodule Coherence.TrackableService do
     conn
   end
 
+  defp user_changeset_module(user) do
+    user.__struct__
+    |> Module.split()
+    |> Enum.slice(0..-2)
+    |> Module.safe_concat
+  end
+  
   @spec track_password_reset(conn, schema, boolean) :: conn
   def track_password_reset(conn, _user, false), do: conn
   def track_password_reset(conn, user, true) do

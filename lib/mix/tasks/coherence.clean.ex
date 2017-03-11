@@ -131,7 +131,8 @@ defmodule Mix.Tasks.Coherence.Clean do
     case view_files[option] do
       nil -> :ok
       file_name ->
-        path = Path.join(["web", "views", "coherence", file_name])
+        web_prefix = Mix.Phoenix.web_prefix()
+        path = Path.join(web_prefix, "views", "coherence", file_name)
         confirm config, path, fn -> rm!(path) end
     end
     option
@@ -143,7 +144,8 @@ defmodule Mix.Tasks.Coherence.Clean do
     |> case do
       nil -> :ok
       {path, _} ->
-        path = Path.join(["web", "templates", "coherence", "#{path}"])
+        web_prefix = Mix.Phoenix.web_prefix()   
+        path = Path.join(web_prefix, "templates", "coherence", "#{path}")
         confirm config, path, fn -> rm_dir!(path) end
     end
     option
@@ -153,7 +155,8 @@ defmodule Mix.Tasks.Coherence.Clean do
     case Install.controller_files[option] do
       nil -> :ok
       file_name ->
-        path = Path.join(["web", "controllers", "coherence", file_name])
+        web_prefix = Mix.Phoenix.web_prefix()
+        path = Path.join(web_prefix, "controllers", "coherence", file_name)
         confirm config, path, fn -> rm!(path) end
     end
     option
@@ -210,27 +213,33 @@ defmodule Mix.Tasks.Coherence.Clean do
   end
 
   defp remove!(%{templates: true} = config, :templates) do
-    path = "web/templates/coherence"
+    web_prefix = Mix.Phoenix.web_prefix()
+    path = Path.join(web_prefix, "templates/coherence")
     confirm config, path, fn -> rm_dir!(path) end
   end
   defp remove!(%{views: true} = config, :views) do
-    path = "web/views/coherence"
+    web_prefix = Mix.Phoenix.web_prefix()
+    path = Path.join(web_prefix, "views/coherence")
     confirm config, path, fn -> rm_dir!(path) end
   end
   defp remove!(%{controllers: true} = config, :controllers) do
-    path = "web/controllers/coherence"
+    web_prefix = Mix.Phoenix.web_prefix()
+    path = Path.join(web_prefix, "controllers/coherence")
     confirm config, path, fn -> rm_dir!(path) end
   end
   defp remove!(%{models: true} = config, :models) do
-    path = "web/models/coherence"
+    web_prefix = Mix.Phoenix.web_prefix()
+    path = Path.join(web_prefix, "models/coherence")
     confirm config, path, fn -> rm_dir!(path) end
   end
   defp remove!(%{web: true} = config, :web) do
-    path = "web/coherence_web.ex"
+    web_prefix = Mix.Phoenix.web_prefix()
+    path = Path.join(web_prefix, "coherence_web.ex")
     confirm config, path, fn -> rm!(path) end
   end
   defp remove!(%{emails: true} = config, :emails) do
-    path = "web/emails/coherence"
+    web_prefix = Mix.Phoenix.web_prefix()
+    path = Path.join(web_prefix, "emails/coherence")
     confirm config, path, fn -> rm_dir!(path) end
   end
   defp remove!(%{migrations: true} = config, :migrations) do

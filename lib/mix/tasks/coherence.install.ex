@@ -308,8 +308,8 @@ config :coherence, #{base}.Coherence.Mailer,
 
   defp check_for_model(%{user_schema: user_schema} = config) do
     user_schema = Module.concat user_schema, nil
-    web_prefix = Mix.Phoenix.web_prefix()
-    Map.put(config, :model_found?, Code.ensure_compiled?(user_schema) or model_exists?(user_schema, Path.join(web_prefix, "coherence")))
+    app_prefix = Coherence.Mix.Utils.app_prefix
+    Map.put(config, :model_found?, Code.ensure_compiled?(user_schema) or model_exists?(user_schema, Path.join(app_prefix, "coherence")))
   end
   defp check_for_model(config), do: config
 
@@ -317,10 +317,11 @@ config :coherence, #{base}.Coherence.Mailer,
     name = module_to_string(user_schema)
     |> String.downcase
     binding = Kernel.binding() ++ [base: config[:base], user_table_name: config[:user_table_name]]
-    web_prefix = Mix.Phoenix.web_prefix()
+    app_prefix = Coherence.Mix.Utils.app_prefix
     copy_from paths(),
       "priv/templates/coherence.install/models/coherence", "", binding, [
-        {:eex, "user.ex", Path.join(web_prefix, "coherence/#{name}.ex")}
+        {:eex, "user.ex", Path.join(app_prefix, "coherence/#{name}.ex")},
+        {:eex, "coherence.ex", Path.join(app_prefix, "coherence/coherence.ex")}
       ], config
     config
   end
@@ -608,7 +609,7 @@ config :coherence, #{base}.Coherence.Mailer,
   ################
   # Instructions
 
-  defp seeds_instructions(%{repo: repo, user_schema: user_schema, authenticatable: true} = config) do
+  defp seeds_instructions(%{base: base, repo: repo, user_schema: user_schema, authenticatable: true} = config) do
     user_schema = to_string user_schema
     repo = to_string repo
     """
@@ -616,7 +617,7 @@ config :coherence, #{base}.Coherence.Mailer,
 
     #{repo}.delete_all #{user_schema}
 
-    #{user_schema}.changeset(%#{user_schema}{}, %{name: "Test User", email: "testuser@example.com", password: "secret", password_confirmation: "secret"})
+    #{base}.Coherence.user_changeset(%#{user_schema}{}, %{name: "Test User", email: "testuser@example.com", password: "secret", password_confirmation: "secret"})
     |> #{repo}.insert!
     """ <>
       if config[:confirmable], do: "|> Coherence.ControllerHelpers.confirm!\n", else: ""
@@ -828,7 +829,7 @@ config :coherence, #{base}.Coherence.Mailer,
     end
   end
   defp parse_model(_, base, _) do
-    {"#{base}.User", :users}
+    {"#{base}.Coherence.User", :users}
   end
 
   defp prefix_model(model, opts) do
